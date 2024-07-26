@@ -16,7 +16,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir="~/Documents/R/DREAM Mixtures")
+knitr::opts_knit$set(root.dir="~/Documents/R/Dream Mixtures")
 
 if (!require("pacman")) install.packages("pacman")
 #Load packages
@@ -30,9 +30,12 @@ theme_set(theme_light())
 # Look at the data
 
 ```{r}
+pacman::p_load(here)
+
+mixturesWithFeatures <- read.csv(here("data", "raw", "MixturesWithFeatures.csv"))
 
 #This is generated from Preprocessing.R
-mixturesWithFeatures <- read.csv("data/processed/MixturesWithFeatures.csv")
+#mixturesWithFeatures <- read.csv("data/raw/processed/MixturesWithFeatures.csv")
 
 # You can load from Dropbox if you are having issues loading from the workspace:
 # mixturesWithFeatures <- read.csv("https://www.dropbox.com/scl/fi/f75j07xedtsv3774con0k/MixturesWithFeatures.csv?rlkey=lyfw541vdb6byhpj1341etvnu&dl=1", row.names=NULL)
@@ -230,6 +233,20 @@ print(rfFit)
 
 ```
 
+# May's model
+
+```{r}
+#define training control
+fitControl <- trainControl(method = "repeatedcv",number = 5,repeats = 2) #5 fold cv, repeat 2 times
+
+nnetFit<-train(experimental_values ~ diff_mixture_size + overlap_percent + angle_dist, data = train_set,
+             method = "nnet",
+             trControl = fitControl,
+             metric="RMSE")
+#Look at performance in cross-validation
+print(nnetFit)
+
+```
 
 # Ideas for contributing
 ## Feature engineering
