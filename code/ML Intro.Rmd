@@ -16,7 +16,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir="~/Documents/R/Dream Mixtures")
+knitr::opts_knit$set(root.dir="~/Documents/R/DREAM Mixtures")
 
 if (!require("pacman")) install.packages("pacman")
 #Load packages
